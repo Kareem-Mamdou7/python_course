@@ -69,18 +69,18 @@ else:
 print("\n")
 
 # Q5: Fresh grad jobs with future opportunities
-# Convert EXPERIENCE_LENGTH to numeric, forcing errors to NaN
-df["EXPERIENCE_LENGTH"] = pd.to_numeric(df["EXPERIENCE_LENGTH"], errors="coerce")
-
-# Now filter for entry-level jobs
-entry_level = df[df["EXPERIENCE_LENGTH"] <= 1]
-future_opportunities = entry_level[
-    entry_level["JOB_CLASS_TITLE"].isin(df["EXP_JOB_CLASS_TITLE"])
-]
-q5_answer = (
-    future_opportunities[["JOB_CLASS_TITLE", "ENTRY_SALARY_GEN"]]
-    .sort_values("ENTRY_SALARY_GEN", ascending=False)
-    .head(5)
-)
-print("Q5: Top entry-level jobs with future opportunities:")
-print(q5_answer.to_string(index=False))
+# Ensure that 'EXP_JOB_CLASS_TITLE' exists or adjust this part
+if "EXP_JOB_CLASS_TITLE" in df.columns:
+    entry_level = df[df["EXPERIENCE_LENGTH"] <= 1]
+    future_opportunities = entry_level[
+        entry_level["JOB_CLASS_TITLE"].isin(df["EXP_JOB_CLASS_TITLE"])
+    ]
+    q5_answer = (
+        future_opportunities[["JOB_CLASS_TITLE", "ENTRY_SALARY_GEN"]]
+        .sort_values("ENTRY_SALARY_GEN", ascending=False)
+        .head(5)
+    )
+    print("Q5: Top entry-level jobs with future opportunities:")
+    print(q5_answer.to_string(index=False))
+else:
+    print("Q5: EXP_JOB_CLASS_TITLE column is not available in the dataset.")
